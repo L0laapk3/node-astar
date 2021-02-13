@@ -49,7 +49,7 @@ function aStar(params) {
     }
     // not done yet
     closedDataSet.add(hash(node.data));
-    for (let neighborData of params.neighbors(node.data)) {
+    for (let neighborData of params.neighbors(node.data, node.g, node.h)) {
       if (closedDataSet.contains(hash(neighborData))) {
         // skip closed neighbors
         continue;
