@@ -8,7 +8,7 @@ module.exports = aStar;
 function aStar(params) {
   assert.ok(params.start !== undefined);
   assert.ok(params.isEnd !== undefined);
-  assert.ok(params.neighbor);
+  assert.ok(params.neighbors);
   assert.ok(params.distance);
   assert.ok(params.heuristic);
   if (params.timeout === undefined) params.timeout = Infinity;
@@ -49,9 +49,11 @@ function aStar(params) {
     }
     // not done yet
     closedDataSet.add(hash(node.data));
-    var neighbors = params.neighbor(node.data);
-    for (var i = 0; i < neighbors.length; i++) {
-      var neighborData = neighbors[i];
+    const neighborIterator = params.neighbors(node.data);
+    let next = neighborIterator.next();
+    while (!next.done) {
+      var neighborData = next.value;
+      next = neighborIterator.next();
       if (closedDataSet.contains(hash(neighborData))) {
         // skip closed neighbors
         continue;
