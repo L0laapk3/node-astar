@@ -49,11 +49,7 @@ function aStar(params) {
     }
     // not done yet
     closedDataSet.add(hash(node.data));
-    const neighborIterator = params.neighbors(node.data);
-    let next = neighborIterator.next();
-    while (!next.done) {
-      var neighborData = next.value;
-      next = neighborIterator.next();
+    for (let neighborData of params.neighbors(node.data)) {
       if (closedDataSet.contains(hash(neighborData))) {
         // skip closed neighbors
         continue;
